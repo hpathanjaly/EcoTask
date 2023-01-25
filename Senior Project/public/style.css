@@ -1,7 +1,38 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap');
 html, body, *{
     margin: 0;
     padding: 0;
-    font-family: 'Roboto Mono', monospace;
-    background-color: rgb(36, 36, 36);
+    font-family: 'Montserrat', sans-serif;
+}
+body{
+    background-color: white;
+}
+nav{
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.856);
+}
+nav a{
+    text-decoration: none;
+    vertical-align: middle;
+    font-size: 30px;
+    padding-right: 20px;
+    color: white;
+    transition: all .2s ease-in-out; 
+}
+nav a:hover { 
+    transform: scale(1.1); 
+}
+.logo{
+    text-align: left;
+    width: 49%;
+}
+.logo img{
+    width: 50%;
+}
+.rest{
+    text-align: right;
+    width: 50%;
+}
+.logo, .rest{
+    display: inline-block;
 }
