@@ -5,7 +5,7 @@ const mainRoutes = require('./routes/mainRoutes');
 
 const app = express();
 
-const dbURI = "mongodb+srv://Admin:Hari2005@ecotask.r79x3lu.mongodb.net/?retryWrites=true&w=majority";
+const dbURI = "mongodb+srv://Admin:Hari2005@ecotask.r79x3lu.mongodb.net/EcoTask?retryWrites=true&w=majority";
 
 app.use(express.urlencoded({ extended: true }));
 mongoose.set('strictQuery', false);
