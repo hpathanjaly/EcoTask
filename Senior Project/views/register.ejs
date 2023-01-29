@@ -2,19 +2,25 @@
 <html lang="en">
     <%- include('./partials/head.ejs') %>
 <body>
+  <% if(success > 0){ %>
+    <% if(success == 1) { %>
+      <!-- add log in link -->
+      <div class="success"><p>You have successfully registered. You may proceed to log in</p></div>
+    <% } %>
+  <% } %>
     <%- include('./partials/nav.ejs') %>
-    <div id="registration_div">
+    <div class= 'form' id="registration_div">
         <form class="register" action="/success" method="post">
           <p class="header">Register</p>
           <div class="info">
+            <label for="name">Name</label>
+            <input type = "text" name="name" required><br>
             <label for="email">Email</label>
-            <input type = "email" name="email" required>
+            <input type = "email" name="email" required><br>
             <label for="password">Password</label>
             <input type="password" name="password" required><br>
             <label for="confirm_password">Confirm Password</label>
             <input type="password" name="confirm_password" required><br>
-            <label for="name">Name</label>
-            <input type = "text" name="name" required><br>
             <button type="submit" class="registerbtn">Register</button><br>
             <small>Already registered? <a href="/login">Log in here</a>
           </div>

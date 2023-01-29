@@ -3,13 +3,13 @@
     <%- include('./partials/head.ejs') %>
 <body>
     <%- include('./partials/nav.ejs') %>
-    <div id="login_div">
+    <div class= 'form' id="login_div">
         <!-- Should probably change the form action to a new page for validating logins -->
         <form action="/" method="post">
         <p class="header">Log In</p>
         <div class="info">
             <label for="email">Email</label>
-            <input type = "email" name="email" required>
+            <input type = "email" name="email" required><br>
             <label for="password">Password</label>
             <input type="password" name="password" required><br>
             <small>Haven't registered? <a href="/register">Register here</a><br>

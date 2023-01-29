@@ -2,10 +2,11 @@ const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 const mainRoutes = require('./routes/mainRoutes');
+const url = require('url')
 
 const app = express();
 
-const dbURI = "mongodb+srv://Admin:Hari2005@ecotask.r79x3lu.mongodb.net/?retryWrites=true&w=majority";
+const dbURI = "mongodb+srv://Admin:Hari2005@ecotask.r79x3lu.mongodb.net/EcoTask?retryWrites=true&w=majority";
 
 app.use(express.urlencoded({ extended: true }));
 mongoose.set('strictQuery', false);
