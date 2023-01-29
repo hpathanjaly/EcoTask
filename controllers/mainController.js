@@ -8,7 +8,7 @@ const login = (req, res) => {
     res.render('login');
 }
 const register = (req, res) => {
-    res.render('register', {success: req.query.success});
+    res.render('register', {success: req.query.success, error:req.query.error});
 }
 
 module.exports = {

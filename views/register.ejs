@@ -8,6 +8,12 @@
       <div class="success"><p>You have successfully registered. You may proceed to log in</p></div>
     <% } %>
   <% } %>
+  <% if(error > 0){ %>
+    <% if(error == 2) { %>
+      <!-- add log in link -->
+      <div class="error"><p>Email already in use.</p></div>
+    <% } %>
+  <% } %>
     <%- include('./partials/nav.ejs') %>
     <div class= 'form' id="registration_div">
         <form class="register" action="/success" method="post">
