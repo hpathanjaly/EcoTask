@@ -64,7 +64,7 @@ function authenticate(req, res){
             const valid = await bcrypt.compare(request.password, user.password);
                 if(valid){
                     session =  req.session
-                    session.userid = user.email;
+                    session.userid = user._id;
                     console.log(session.userid);
                     res.redirect('login?success=1')
                 }
