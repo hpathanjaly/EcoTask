@@ -56,31 +56,32 @@ const process = (req, res) =>{
     });
 }
 function authenticate(req, res){
-    var request = req.body;
-    //console.log(request);
-    User.findOne({ email: request.email }, async function(err, user){
-        if(user){
-            //console.log(user.password);
-            const valid = await bcrypt.compare(request.password, user.password);
-                if(valid){
-                    session =  req.session
-                    session.userid = user._id;
-                    console.log(session.userid);
-                    res.redirect('login?success=1')
-                }
-                else{
-                    //redirect to login with error
-                    res.redirect('login?error=2')
-                }
-        }
-        else{
-            res.redirect('login?error=1')
-        }
-    });
+  
+  var request = req.body;
+  //console.log(request);
+  User.findOne({ email: request.email }, async function(err, user){
+    if(user){
+        //console.log(user.password);
+        const valid = await bcrypt.compare(request.password, user.password);
+            if(valid){
+                session =  req.session
+                session.userid = user._id;
+                console.log(session.userid);
+                res.redirect('login?success=1')
+            }
+            else{
+                //redirect to login with error
+                res.redirect('login?error=2')
+            }
+    }
+    else{
+      res.redirect('login?error=1')
+    }
+  });
 }
 function logout(req, res){
     console.log(req.session);
-    if(req.session){
+    if(req.session.userid){
         req.session.destroy((err) => {
             if(err){
                 console.log(err);

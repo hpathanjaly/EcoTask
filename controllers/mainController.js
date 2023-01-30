@@ -31,7 +31,7 @@ function drop(req, res){
             console.log("tasks dropped");
         }
     })
-    res.redirect('index');
+    res.redirect('/');
 }
 
 module.exports = {
