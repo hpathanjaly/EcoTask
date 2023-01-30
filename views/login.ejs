@@ -2,6 +2,22 @@
 <html lang="en">
     <%- include('./partials/head.ejs') %>
 <body>
+    <% if(success > 0) { %>
+        <% if(success == 1) { %>
+            <div class="success"><p>You are logged in!</p></div>
+        <% } %>
+        <% if(success == 2) { %>
+            <div class="success"><p>You have logged out!</p></div>
+        <% } %>
+    <% } %>
+    <% if(error > 0) { %>
+        <% if(error == 1) { %>
+            <div class="error"><p>User with that email not found.</p></div>
+        <% } %>
+        <% if(error == 2) { %>
+            <div class="error"><p>Incorrect password.</p></div>
+        <% } %>
+    <% } %>
     <%- include('./partials/nav.ejs') %>
     <div class= 'form' id="login_div">
         <!-- Should probably change the form action to a new page for validating logins -->

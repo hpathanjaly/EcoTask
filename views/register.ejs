@@ -4,13 +4,14 @@
 <body>
   <% if(success > 0){ %>
     <% if(success == 1) { %>
-      <!-- add log in link -->
-      <div class="success"><p>You have successfully registered. You may proceed to log in</p></div>
+      <div class="success"><p>You have successfully registered. You may proceed to <a href="/login">log in</a></p></div>
     <% } %>
   <% } %>
   <% if(error > 0){ %>
+    <% if(error == 1) { %>
+      <div class="error"><p>Passwords did not match.</p></div>
+    <% } %>
     <% if(error == 2) { %>
-      <!-- add log in link -->
       <div class="error"><p>Email already in use.</p></div>
     <% } %>
   <% } %>

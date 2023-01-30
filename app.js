@@ -2,7 +2,8 @@ const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 const mainRoutes = require('./routes/mainRoutes');
-const url = require('url')
+const url = require('url');
+const session = require('express-session');
 
 const app = express();
 
@@ -17,6 +18,14 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .catch(err => console.log(err));
 
 app.set('view engine', 'ejs');
+
+
+app.use(session({
+  secret: 'login',
+  saveUninitialized:true,
+  cookie: { maxAge: 60000 },
+  resave: false
+}))
 
 app.use(morgan('dev'))
 app.use(express.static('public'))

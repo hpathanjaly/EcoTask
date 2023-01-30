@@ -41,28 +41,9 @@ const process = (req, res) =>{
                         res.redirect('register?error=2')
                     }
                 })
-            //     if(User.find({ email: user.email }).email == null){
-            //         hashPass = hash;
-            //         //console.log(hashPass);
-            //         const newUser = new User({
-            //             name: user.name, 
-            //             email: user.email,
-            //             password: hashPass
-            //         })
-            //         console.log(newUser);
-            //         newUser.save()
-            //             .then(result => {
-            //                 console.log("success creating account");;
-            //             })
-            //             .catch(err => {
-            //                 console.log(err);  
-            //             });
-            //     }
-            //     else{
-            //         console.log("email already in use");
-            //     }
             }
             else{
+                res.redirect('register?error=1');
                 console.log('passwords dont match');
             }
         })
@@ -76,22 +57,43 @@ const process = (req, res) =>{
 }
 function authenticate(req, res){
     var request = req.body;
-    var user = User.find({ email: request.email });
-    if(user.exists()){
-        bcrypt.compare(request.password, user.password)
-            .then(res => {
-                if(res == true){
-                    //start session
+    //console.log(request);
+    User.findOne({ email: request.email }, async function(err, user){
+        if(user){
+            //console.log(user.password);
+            const valid = await bcrypt.compare(request.password, user.password);
+                if(valid){
+                    session =  req.session
+                    session.userid = user.email;
+                    console.log(session.userid);
+                    res.redirect('login?success=1')
                 }
                 else{
                     //redirect to login with error
+                    res.redirect('login?error=2')
                 }
-            })
+        }
+        else{
+            res.redirect('login?error=1')
+        }
+    });
+}
+function logout(req, res){
+    console.log(req.session);
+    if(req.session){
+        req.session.destroy((err) => {
+            if(err){
+                console.log(err);
+            }
+            else{
+                res.redirect('login?success=2');
+            }
+        })
     }
-
 }
 
 module.exports = {
     process,
-    authenticate
+    authenticate,
+    logout
 }
