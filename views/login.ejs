@@ -17,6 +17,12 @@
         <% if(error == 2) { %>
             <div class="error"><p>Incorrect password.</p></div>
         <% } %>
+        <% if(error == 3) { %>
+            <div class="error"><p>You are already logged in</p></div>
+        <% } %>
+        <% if(error == 4) { %>
+            <div class="error"><p>You were not logged in.</p></div>
+        <% } %>
     <% } %>
     <%- include('./partials/nav.ejs') %>
     <div class= 'form' id="login_div">

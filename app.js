@@ -20,12 +20,12 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
 app.set('view engine', 'ejs');
 
 
-app.use(session({
-  secret: 'login',
-  saveUninitialized: true,
-  cookie: { maxAge: 60000 },
-  resave: false
-}))
+// app.use(session({
+//   secret: 'login',
+//   saveUninitialized: true,
+//   cookie: { maxAge: 60000 },
+//   resave: false
+// }))
 
 app.use(morgan('dev'))
 app.use(express.static('public'))

@@ -1,5 +1,8 @@
 const bcrypt = require('bcrypt');
 const User = require('../models/user');
+const express = require('express')
+const app = express();
+const session = require('express-session')
 const process = (req, res) =>{
     var user = req.body;
     //console.log(user);
@@ -56,28 +59,38 @@ const process = (req, res) =>{
     });
 }
 function authenticate(req, res){
-  
-  var request = req.body;
-  //console.log(request);
-  User.findOne({ email: request.email }, async function(err, user){
-    if(user){
-        //console.log(user.password);
-        const valid = await bcrypt.compare(request.password, user.password);
+  if(!req.session){
+    var request = req.body;
+    //console.log(request);
+    User.findOne({ email: request.email }, async function(err, user){
+      if(user){
+          //console.log(user.password);
+          const valid = await bcrypt.compare(request.password, user.password);
             if(valid){
-                session =  req.session
-                session.userid = user._id;
-                console.log(session.userid);
-                res.redirect('login?success=1')
-            }
-            else{
-                //redirect to login with error
-                res.redirect('login?error=2')
-            }
-    }
-    else{
-      res.redirect('login?error=1')
-    }
-  });
+                  const newSession = app.use(session({
+                    secret: 'login',
+                    saveUninitialized: true,
+                    cookie: { maxAge: 60000 },
+                    resave: false
+                  }))
+                  //console.log(session);
+                  newSession.userid = user._id;
+                  //console.log(session.userid);
+                  res.redirect('login?success=1')
+              }
+              else{
+                  //redirect to login with error
+                  res.redirect('login?error=2')
+              }
+      }
+      else{
+        res.redirect('login?error=1')
+      }
+    });
+  }
+  else{
+    res.redirect('login?error=3')
+  }
 }
 function logout(req, res){
     console.log(req.session);
@@ -90,6 +103,9 @@ function logout(req, res){
                 res.redirect('login?success=2');
             }
         })
+    }
+    else{
+      res.redirect('login?error=4')
     }
 }
 
