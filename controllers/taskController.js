@@ -8,6 +8,21 @@ function createTasks(req, res){
       title: "Smart Thermostat",
       description: "Buy a smart thermostat or create a schedule for your current thermostat",
       carbon_reduce_possibility: 700
+    },
+    {
+      title: "Smart Thermostat",
+      description: "Buy a smart thermostat or create a schedule for your current thermostat",
+      carbon_reduce_possibility: 700
+    },
+    {
+      title: "Smart Thermostat",
+      description: "Buy a smart thermostat or create a schedule for your current thermostat",
+      carbon_reduce_possibility: 700
+    },
+    {
+      title: "Smart Thermostat",
+      description: "Buy a smart thermostat or create a schedule for your current thermostat",
+      carbon_reduce_possibility: 700
     }
   ]).then(res => {
     console.log('tasks added');

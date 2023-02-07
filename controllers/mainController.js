@@ -1,8 +1,12 @@
 const session = require("express-session");
 const mongoose = require("mongoose");
+const Task = require('../models/task');
 
-const index = (req, res) => {
-    res.render('index');
+async function index(req, res){
+    let allTasks = await Task.find().limit(3)
+    let topThree = allTasks
+    console.log(topThree)
+    res.render('index', {topThree});
 }
 const account = (req, res) => {
     res.render('account');
