@@ -3,8 +3,8 @@
     <%- include('./partials/head.ejs') %>
 <body>
     <%- include('./partials/nav.ejs') %>
-    <% if(topThree.length == 3){ %>
-      <% topThree.forEach(task => { %>
+    <% if(tasks.length > 0){ %>
+      <% tasks.forEach(task => { %>
         <div class='task'>
           <% if(task.image){ %>
             <img src = "<%= task.image %>">

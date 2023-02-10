@@ -5,11 +5,16 @@ html, body, *{
     font-family: 'Montserrat', sans-serif;
 }
 body{
+    padding-top: 100px;
     background-color: white;
 }
+
+/* navbar */
 nav{
     width: 100%;
     background-color: rgba(0, 0, 0, 0.856);
+    position: fixed;
+    top: 0;
 }
 nav a{
     text-decoration: none;
@@ -24,19 +29,20 @@ nav a:hover {
 }
 .logo{
     text-align: left;
-    width: 49%;
+    width: 39%;
 }
 .logo img{
     width: 50%;
 }
 .rest{
     text-align: right;
-    width: 50%;
+    width: 60%;
 }
 .logo, .rest{
     display: inline-block;
 }
 
+/* forms */
 .form{
     text-align: center;
     background-color: rgb(136, 192, 62);
@@ -81,6 +87,8 @@ input{
 small{
     font-size: 15px;
 }
+
+/* alerts */
 .error{
     text-align: center;
     width: 100%;
@@ -95,4 +103,28 @@ small{
     width: 100%;
     background-color: limegreen;
     font-size: 15px;
+}
+
+/* tasks styling */
+.task{
+  width: 50%;
+  background-color: black;
+  color: white;
+  margin: 15px auto;
+  text-align: center;
+  border-radius: 20px;
+  padding: 30px;
+}
+.task img{
+  width: 90%;
+  margin: 10px;
+  border: rgba(0,0,0,0) solid 0px;
+  border-radius: 20px;
+}
+.taskInfo{
+  width: 90%;
+  border-radius: 20px;
+  background-color: rgba(255,255,255, 0.25);
+  padding: 20px;
+  margin: 10px auto;
 }

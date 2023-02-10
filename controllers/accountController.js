@@ -1,8 +1,5 @@
 const bcrypt = require('bcrypt');
 const User = require('../models/user');
-const express = require('express')
-const app = express();
-const session = require('express-session')
 const process = (req, res) =>{
     var user = req.body;
     //console.log(user);
@@ -59,53 +56,37 @@ const process = (req, res) =>{
     });
 }
 function authenticate(req, res){
-  if(!req.session){
-    var request = req.body;
-    //console.log(request);
-    User.findOne({ email: request.email }, async function(err, user){
-      if(user){
-          //console.log(user.password);
-          const valid = await bcrypt.compare(request.password, user.password);
+  
+  var request = req.body;
+  //console.log(request);
+  User.findOne({ email: request.email }, async function(err, user){
+    if(user){
+        //console.log(user.password);
+        const valid = await bcrypt.compare(request.password, user.password);
             if(valid){
-                  const newSession = app.use(session({
-                    secret: 'login',
-                    saveUninitialized: true,
-                    cookie: { maxAge: 60000 },
-                    resave: false
-                  }))
-                  //console.log(session);
-                  newSession.userid = user._id;
-                  //console.log(session.userid);
-                  res.redirect('login?success=1')
-              }
-              else{
-                  //redirect to login with error
-                  res.redirect('login?error=2')
-              }
-      }
-      else{
-        res.redirect('login?error=1')
-      }
-    });
-  }
-  else{
-    res.redirect('login?error=3')
-  }
+                session =  req.session
+                session.userid = user._id;
+                console.log(session.userid);
+                res.redirect('login?success=1')
+            }
+            else{
+                //redirect to login with error
+                res.redirect('login?error=2')
+            }
+    }
+    else{
+      res.redirect('login?error=1')
+    }
+  });
 }
 function logout(req, res){
     console.log(req.session);
     if(req.session.userid){
-        req.session.destroy((err) => {
-            if(err){
-                console.log(err);
-            }
-            else{
-                res.redirect('login?success=2');
-            }
-        })
+        delete req.session.userid;
+      res.redirect("login?success=2")
     }
     else{
-      res.redirect('login?error=4')
+      res.redirect('login?error=3');
     }
 }
 

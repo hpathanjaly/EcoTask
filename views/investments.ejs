@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('./partials/head.ejs') %>
+<body>
+    <%- include('./partials/nav.ejs') %>
+    <% if(investments.length > 0){ %>
+      <% investments.forEach(investment => { %>
+        <div class='task'>
+          <% if(investment.image){ %>
+            <img src = "<%= investment.image %>">
+          <% } %>
+          <div class="taskInfo">
+            <h1><%= investment.title %></h1>
+            <h3>Carbon Saved: <%= investment.carbon_reduce_possibility %></h3>
+            <p><%= investment.description %></p>
+          </div>
+        </div>
+      <% }) %>
+    <% }  else{ %>
+      <h1>No investments</h1>
+    <% } %>
+</body>
+</html>
