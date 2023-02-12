@@ -3,10 +3,7 @@
     <%- include('./partials/head.ejs') %>
 <body>
     <%- include('./partials/nav.ejs') %>
-    <% if(tasks.length > 0){ %>
-      <% tasks.forEach(task => { %>
-        <div class='task'>
-            <a href='/task?id=<%= task._id %>'>
+          <div class='task'>
             <% if(task.image){ %>
               <img src = "<%= task.image %>">
             <% } %>
@@ -15,11 +12,6 @@
               <h3>Carbon Saved: <%= task.carbon_reduce_possibility %></h3>
               <p><%= task.description %></p>
             </div>
-          </a>
-        </div>
-      <% }) %>
-    <% }  else{ %>
-      <h1>No Tasks</h1>
-    <% } %>
+          </div>
 </body>
 </html>

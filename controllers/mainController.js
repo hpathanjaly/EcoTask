@@ -54,7 +54,16 @@ function drop(req, res){
     })
     res.redirect('/');
 }
-
+async function task(req, res){
+  const id = req.query.id;
+  let task = await Task.findOne({ _id: id });
+  res.render('task', {task})
+}
+async function investment(req, res){
+  const id = req.query.id;
+  let investment = await Investment.findOne({ _id: id });
+  res.render('investment', {investment})
+}
 module.exports = {
     index,
     account,
@@ -62,5 +71,7 @@ module.exports = {
     register,
     drop,
     tasks,
-    investments
+    investments,
+    task,
+    investment
 }

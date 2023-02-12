@@ -3,6 +3,7 @@ html, body, *{
     margin: 0;
     padding: 0;
     font-family: 'Montserrat', sans-serif;
+  text-decoration:none;
 }
 body{
     padding-top: 100px;
@@ -107,6 +108,7 @@ small{
 
 /* tasks styling */
 .task{
+  text-decoration:none;
   width: 50%;
   background-color: black;
   color: white;
@@ -122,6 +124,7 @@ small{
   border-radius: 20px;
 }
 .taskInfo{
+  color: white;
   width: 90%;
   border-radius: 20px;
   background-color: rgba(255,255,255, 0.25);

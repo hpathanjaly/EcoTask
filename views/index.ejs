@@ -5,16 +5,18 @@
     <%- include('./partials/nav.ejs') %>
     <% if(topThree.length == 3){ %>
       <% topThree.forEach(task => { %>
-        <div class='task'>
-          <% if(task.image){ %>
-            <img src = "<%= task.image %>">
-          <% } %>
-          <div class="taskInfo">
-            <h1><%= task.title %></h1>
-            <h3>Carbon Saved: <%= task.carbon_reduce_possibility %></h3>
-            <p><%= task.description %></p>
+          <div class='task'>
+            <a href='/task?id=<%= task._id %>'>
+              <% if(task.image){ %>
+                <img src = "<%= task.image %>">
+              <% } %>
+              <div class="taskInfo">
+                <h1><%= task.title %></h1>
+                <h3>Carbon Saved: <%= task.carbon_reduce_possibility %></h3>
+                <p><%= task.description %></p>
+              </div>    
+            </a>
           </div>
-        </div>
       <% }) %>
     <% }  else{ %>
       <h1>No Tasks</h1>
