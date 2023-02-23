@@ -1,6 +1,8 @@
 const appVar = require('../app');
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 const Task = require('../models/task');
+const User = require('../models/user');
+const UserTasks = require('../models/userTasks')
 const Investment = require('../models/investment');
 
 function createAll(req, res){
@@ -60,4 +62,32 @@ function createAll(req, res){
   });
   res.redirect('/');
 }
-module.exports = {createAll}
+async function addTask(req, res){
+  let data = req.body;
+  console.log(data.taskid);
+  console.log(data)
+  const newUserTask = await UserTasks.create({
+      task_id: data.taskid,
+      user_id: data.userid,
+      task: data.taskid,
+      user: data.userid
+    });
+  console.log(newUserTask)
+  UserTasks.findOne({task_id: data.taskid}).populate('task').populate('user').exec((err, usertask) => {
+    console.log(usertask.task)
+  });
+  //newUserTask = await newUserTask.populate("task").populate('user').exec()
+  //console.log(newUserTask.task.name)
+  
+  // newUserTask.populate("user").exec(function(err, res){
+  //   if(err){
+  //     console.log(err);
+  //   }
+  // });
+  // console.log(newUserTask.user.name);
+  res.redirect('/tasks');
+}
+module.exports = {
+  createAll,
+  addTask
+}

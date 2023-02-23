@@ -10,13 +10,12 @@ router.get('/account', mainController.account);
 router.get('/login', mainController.login);
 router.get('/register', mainController.register);
 router.get('/tasks', mainController.tasks);
-router.get('/task', mainController.task);
 router.get('/investments', mainController.investments);
-router.get('/investment', mainController.investment);
 router.get('/drop', mainController.drop);
 router.get('/create', taskController.createAll);
 router.get('/logout', accountController.logout);
 router.post('/success', accountController.process);
 router.post('/', accountController.authenticate);
+router.post('/myTasks', taskController.addTask);
 
 module.exports = router;

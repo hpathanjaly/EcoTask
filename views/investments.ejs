@@ -6,7 +6,6 @@
     <% if(investments.length > 0){ %>
       <% investments.forEach(investment => { %>
         <div class='task'>
-          <a href='/investment?id=<%= investment._id %>'>
           <% if(investment.image){ %>
             <img src = "<%= investment.image %>">
           <% } %>
@@ -15,9 +14,7 @@
             <h3>Carbon Saved: <%= investment.carbon_reduce_possibility %></h3>
             <p><%= investment.description %></p>
           </div>
-          </a>
         </div>
-        
       <% }) %>
     <% }  else{ %>
       <h1>No investments</h1>

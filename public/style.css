@@ -3,7 +3,6 @@ html, body, *{
     margin: 0;
     padding: 0;
     font-family: 'Montserrat', sans-serif;
-  text-decoration:none;
 }
 body{
     padding-top: 100px;
@@ -107,12 +106,18 @@ small{
 }
 
 /* tasks styling */
+.allCards{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
 .task{
-  text-decoration:none;
-  width: 50%;
+  width: 250px;
   background-color: black;
   color: white;
-  margin: 15px auto;
+  margin: 15px;
   text-align: center;
   border-radius: 20px;
   padding: 30px;
@@ -124,7 +129,6 @@ small{
   border-radius: 20px;
 }
 .taskInfo{
-  color: white;
   width: 90%;
   border-radius: 20px;
   background-color: rgba(255,255,255, 0.25);

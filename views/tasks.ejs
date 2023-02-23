@@ -3,23 +3,28 @@
     <%- include('./partials/head.ejs') %>
 <body>
     <%- include('./partials/nav.ejs') %>
+    <div class='allCards'>
     <% if(tasks.length > 0){ %>
       <% tasks.forEach(task => { %>
+        <form action = "/myTasks" method = "post"> 
         <div class='task'>
-            <a href='/task?id=<%= task._id %>'>
-            <% if(task.image){ %>
-              <img src = "<%= task.image %>">
-            <% } %>
-            <div class="taskInfo">
-              <h1><%= task.title %></h1>
-              <h3>Carbon Saved: <%= task.carbon_reduce_possibility %></h3>
-              <p><%= task.description %></p>
-            </div>
-          </a>
+          <% if(task.image){ %>
+            <img src = "<%= task.image %>">
+          <% } %>
+          <div class="taskInfo">
+            <h1><%= task.title %></h1>
+            <h3>Carbon Saved: <%= task.carbon_reduce_possibility %></h3>
+            <p><%= task.description %></p>
+            <input type="hidden" name="taskid" value="<%= task._id %>">
+            <input type="hidden" name="userid" value="<%= session.userid %>">
+            <input type='submit' value='Add Task' class='loginbtn'>
+          </div>
         </div>
+      </form>
       <% }) %>
     <% }  else{ %>
       <h1>No Tasks</h1>
     <% } %>
+    </div>
 </body>
 </html>
