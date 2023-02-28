@@ -66,15 +66,14 @@ async function addTask(req, res){
   let data = req.body;
   console.log(data.taskid);
   console.log(data)
-  const newUserTask = await UserTasks.create({
+  await UserTasks.create({
       task_id: data.taskid,
       user_id: data.userid,
       task: data.taskid,
       user: data.userid
     });
-  console.log(newUserTask)
-  UserTasks.findOne({task_id: data.taskid}).populate('task').populate('user').exec((err, usertask) => {
-    console.log(usertask.task)
+  await UserTasks.findOne({task_id: data.taskid}).populate('task').populate('user').exec((err, usertask) => {
+    console.log(usertask.task.title)
   });
   //newUserTask = await newUserTask.populate("task").populate('user').exec()
   //console.log(newUserTask.task.name)
@@ -87,7 +86,30 @@ async function addTask(req, res){
   // console.log(newUserTask.user.name);
   res.redirect('/tasks');
 }
+async function myTasks(req, res){
+  if(!req.session.userid){
+    res.redirect('/login?error=4');
+  }
+  else{
+    UserTasks.find({ user_id: req.session.userid }, (err, usersTasks) => {
+      if(err){
+        console.log(err);
+      }
+      if(usersTasks){
+        let allTasks = []
+        console.log(usersTasks);
+        usersTasks.forEach(userTask => {
+          console.log(userTask.task.title);
+          allTasks.push(userTask.task)
+        })
+        console.log(allTasks);
+        res.render('myTasks', { tasks: allTasks })
+      }
+    });
+  }
+}
 module.exports = {
   createAll,
-  addTask
+  addTask,
+  myTasks
 }

@@ -2,7 +2,7 @@
 <html lang="en">
     <%- include('./partials/head.ejs') %>
 <body>
-    <%- include('./partials/nav.ejs') %>
+    <%- include('./partials/checkNav.ejs') %>
     <% if(success > 0) { %>
         <% if(success == 1) { %>
             <div class="success"><p>You are logged in!</p></div>
@@ -20,6 +20,9 @@
         <% } %>
         <% if(error == 3) { %>
             <div class="error"><p>You cannot logout without logging in first.</p></div>
+        <% } %>
+        <% if(error == 4) { %>
+            <div class="error"><p>You are not logged in.</p></div>
         <% } %>
     <% } %>
     <div class= 'form' id="login_div">

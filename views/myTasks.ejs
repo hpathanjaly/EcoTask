@@ -2,6 +2,27 @@
 <html lang="en">
     <%- include('./partials/head.ejs') %>
 <body>
-    
+    <%- include('./partials/checkNav.ejs') %>
+    <% if(tasks.length > 0){ %>
+        <% tasks.forEach(task => { %>
+          <form action = "/addTask  " method = "post"> 
+          <div class='task'>
+            <% if(task.image){ %>
+              <img src = "<%= task.image %>">
+            <% } %>
+            <div class="taskInfo">
+              <h1><%= task.title %></h1>
+              <h3>Carbon Saved: <%= task.carbon_reduce_possibility %></h3>
+              <p><%= task.description %></p>
+              <input type="hidden" name="taskid" value="<%= task._id %>">
+              <input type="hidden" name="userid" value="<%= session.userid %>">
+              <input type='submit' value='Add Task' class='loginbtn'>
+            </div>
+          </div>
+        </form>
+        <% }) %>
+      <% }  else{ %>
+        <h1>No Tasks</h1>
+      <% } %>
 </body>
 </html>

@@ -1,0 +1,5 @@
+<% if(session.userid){ %>
+    <%- include('loggedInNav.ejs') %>
+<% } else{ %>
+    <%- include('nav.ejs') %>
+<% } %>

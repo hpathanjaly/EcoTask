@@ -5,7 +5,7 @@ html, body, *{
     font-family: 'Montserrat', sans-serif;
 }
 body{
-    padding-top: 100px;
+    /* padding-top: 100px; */
     background-color: white;
 }
 
@@ -13,8 +13,8 @@ body{
 nav{
     width: 100%;
     background-color: rgba(0, 0, 0, 0.856);
-    position: fixed;
-    top: 0;
+    /* position: fixed;
+    top: 0; */
 }
 nav a{
     text-decoration: none;
@@ -29,14 +29,14 @@ nav a:hover {
 }
 .logo{
     text-align: left;
-    width: 39%;
+    width: 35%;
 }
 .logo img{
     width: 50%;
 }
 .rest{
     text-align: right;
-    width: 60%;
+    width: 64%;
 }
 .logo, .rest{
     display: inline-block;

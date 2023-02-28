@@ -14,8 +14,9 @@ router.get('/investments', mainController.investments);
 router.get('/drop', mainController.drop);
 router.get('/create', taskController.createAll);
 router.get('/logout', accountController.logout);
+router.get('/myTasks', taskController.myTasks)
 router.post('/success', accountController.process);
 router.post('/', accountController.authenticate);
-router.post('/myTasks', taskController.addTask);
+router.post('/addTask', taskController.addTask);
 
 module.exports = router;

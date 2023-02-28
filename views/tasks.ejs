@@ -2,11 +2,11 @@
 <html lang="en">
     <%- include('./partials/head.ejs') %>
 <body>
-    <%- include('./partials/nav.ejs') %>
+  <%- include('./partials/checkNav.ejs') %>
     <div class='allCards'>
     <% if(tasks.length > 0){ %>
       <% tasks.forEach(task => { %>
-        <form action = "/myTasks" method = "post"> 
+        <form action = "/addTask  " method = "post"> 
         <div class='task'>
           <% if(task.image){ %>
             <img src = "<%= task.image %>">
