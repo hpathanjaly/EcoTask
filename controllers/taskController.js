@@ -72,18 +72,6 @@ async function addTask(req, res){
       task: data.taskid,
       user: data.userid
     });
-  await UserTasks.findOne({task_id: data.taskid}).populate('task').populate('user').exec((err, usertask) => {
-    console.log(usertask.task.title)
-  });
-  //newUserTask = await newUserTask.populate("task").populate('user').exec()
-  //console.log(newUserTask.task.name)
-  
-  // newUserTask.populate("user").exec(function(err, res){
-  //   if(err){
-  //     console.log(err);
-  //   }
-  // });
-  // console.log(newUserTask.user.name);
   res.redirect('/tasks');
 }
 async function myTasks(req, res){
@@ -91,19 +79,17 @@ async function myTasks(req, res){
     res.redirect('/login?error=4');
   }
   else{
-    UserTasks.find({ user_id: req.session.userid }, (err, usersTasks) => {
+    await UserTasks.find({ user_id: req.session.userid }).populate('task').populate('user').exec((err, usersTasks) => {
       if(err){
         console.log(err);
       }
       if(usersTasks){
-        let allTasks = []
-        console.log(usersTasks);
-        usersTasks.forEach(userTask => {
-          console.log(userTask.task.title);
-          allTasks.push(userTask.task)
+        let allTasks = [];
+        usersTasks.forEach(userTask => {  
+          allTasks.push(userTask.task);
         })
         console.log(allTasks);
-        res.render('myTasks', { tasks: allTasks })
+        res.render('myTasks', { tasks: allTasks });
       }
     });
   }
