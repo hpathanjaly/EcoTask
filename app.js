@@ -21,9 +21,9 @@ app.set('view engine', 'ejs');
 
 
 app.use(session({
-  secret: 'login',
+  secret: 'secretloginkey',
   saveUninitialized: true,
-  cookie: { maxAge: 60000 },
+  cookie: { maxAge: 86400000 },
   resave: false
 }))
 

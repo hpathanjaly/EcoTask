@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('./partials/head.ejs') %>
+<body>
+    <%- include('./partials/checkNav.ejs') %>
+    <div class='allCards'>
+    <% if(investments.length > 0){ %>
+        <% investments.forEach(investment => { %>
+          <div class='task'>
+            <% if(investment.image){ %>
+              <img src = "<%= investment.image %>">
+            <% } %>
+            <div class="taskInfo">
+              <h1><%= investment.title %></h1>
+              <h3>Carbon Saved: <%= investment.carbon_reduce_possibility %></h3>
+              <p><%= investment.description %></p>
+              <form action = "/addInvestment" method = "post"> 
+                <input type="hidden" name="investmentid" value="<%= investment._id %>">
+                <input type="hidden" name="userid" value="<%= session.userid %>">
+                <input type='submit' value='Add Task' class='loginbtn'>
+              </form>
+            </div>
+          </div>
+        <% }) %>
+      <% }  else{ %>
+        <h1>No Tasks</h1>
+      <% } %>
+    </div>
+</body>
+</html>

@@ -3,6 +3,7 @@
     <%- include('./partials/head.ejs') %>
 <body>
     <%- include('./partials/checkNav.ejs') %>
+    <div class='allCards'>
     <% if(topThree.length == 3){ %>
       <% topThree.forEach(task => { %>
         <div class='task'>
@@ -19,5 +20,6 @@
     <% }  else{ %>
       <h1>No Tasks</h1>
     <% } %>
+    </div>
 </body>
 </html>

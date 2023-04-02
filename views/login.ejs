@@ -24,6 +24,9 @@
         <% if(error == 4) { %>
             <div class="error"><p>You are not logged in.</p></div>
         <% } %>
+        <% if(error == 5) { %>
+            <div class="error"><p>You are already logged in.</p></div>
+        <% } %>
     <% } %>
     <div class= 'form' id="login_div">
         <!-- Should probably change the form action to a new page for validating logins -->

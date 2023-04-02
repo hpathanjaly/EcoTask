@@ -17,7 +17,8 @@ const investmentSchema = new Schema({
   image: {
     type: String,
     required: false
-  }
+  },
+  users: [{ type: Schema.Types.ObjectId, ref: "UserInvestments" }]
 });
 
 const Investment = mongoose.model('Investment', investmentSchema);

@@ -1,38 +1,9 @@
-const appVar = require('../app');
 const mongoose = require('mongoose');
 const Task = require('../models/task');
 const User = require('../models/user');
 const UserTasks = require('../models/userTasks')
-const Investment = require('../models/investment');
 
-function createAll(req, res){
-  Investment.insertMany([
-    {
-      title: "Smart Thermostat",
-      description: "Buy a smart thermostat or create a schedule for your current thermostat",
-      carbon_reduce_possibility: 700,
-      image: "https://people.com/thmb/DFzQEoSvkO5lFcDAYm810v0ocVY=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/peo-best-smart-thermostats-of-2022-tout-970a1ed0b4b942e78efab70c398849e0.jpg"
-    },
-    {
-      title: "Smart Thermostat",
-      description: "Buy a smart thermostat or create a schedule for your current thermostat",
-      carbon_reduce_possibility: 700
-    },
-    {
-      title: "Smart Thermostat",
-      description: "Buy a smart thermostat or create a schedule for your current thermostat",
-      carbon_reduce_possibility: 700
-    },
-    {
-      title: "Smart Thermostat",
-      description: "Buy a smart thermostat or create a schedule for your current thermostat",
-      carbon_reduce_possibility: 700
-    }
-  ]).then(res => {
-    console.log('tasks added');
-  }).catch(err => {
-    console.log(err);
-  });
+function createAll(req, res) {
   Task.insertMany([
     {
       title: "Turn Lights Off",
@@ -60,32 +31,31 @@ function createAll(req, res){
   }).catch(err => {
     console.log(err);
   });
-  res.redirect('/');
 }
-async function addTask(req, res){
+async function addTask(req, res) {
   let data = req.body;
   console.log(data.taskid);
   console.log(data)
   await UserTasks.create({
-      task_id: data.taskid,
-      user_id: data.userid,
-      task: data.taskid,
-      user: data.userid
-    });
+    task_id: data.taskid,
+    user_id: data.userid,
+    task: data.taskid,
+    user: data.userid
+  });
   res.redirect('/tasks');
 }
-async function myTasks(req, res){
-  if(!req.session.userid){
+async function myTasks(req, res) {
+  if (!req.session.userid) {
     res.redirect('/login?error=4');
   }
-  else{
-    await UserTasks.find({ user_id: req.session.userid }).populate('task').populate('user').exec((err, usersTasks) => {
-      if(err){
+  else {
+    UserTasks.find({ user_id: req.session.userid }).populate('task').populate('user').exec((err, usersTasks) => {
+      if (err) {
         console.log(err);
       }
-      if(usersTasks){
+      if (usersTasks) {
         let allTasks = [];
-        usersTasks.forEach(userTask => {  
+        usersTasks.forEach(userTask => {
           allTasks.push(userTask.task);
         })
         console.log(allTasks);
@@ -94,8 +64,20 @@ async function myTasks(req, res){
     });
   }
 }
+
+async function deleteTask(req, res) {
+  if (!req.session.userid) {
+    res.redirect('/login?error=4');
+  }
+  else {
+    UserTask.deleteOne({ task_id: req.body.taskid, user_id: req.session.userid })
+  }
+  res.redirect('/myTasks')
+}
+
 module.exports = {
   createAll,
   addTask,
-  myTasks
+  myTasks,
+  deleteTask
 }

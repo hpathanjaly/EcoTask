@@ -11,6 +11,20 @@
               <h1><%= task.title %></h1>
               <h3>Carbon Saved: <%= task.carbon_reduce_possibility %></h3>
               <p><%= task.description %></p>
+              <form action='/setTime' method='post'>
+                <input type='number' name='length'>
+                <select name='time'>
+                  <option value='hours'>Hours</option>
+                  <option value='minutes'>Minutes</option>
+                </select>
+                <input type='submit' value='Set Time' class='loginbtn'>
+                <input type="hidden" value="<%= task.id %>" name='taskid'>
+              </form>
+              <button><a href='/complete'>Complete</a></button>
+              <form action = '/deleteTask' method = 'post'>
+                <input type="hidden" value="<%= task.id %>" name='taskid'>
+                <input type='submit' value='Delete Task' class='loginbtn'>
+              </form>
             </div>
           </div>
 </body>

@@ -114,10 +114,10 @@ small{
   justify-content: center;
 }
 .task{
-  width: 250px;
+  width: 25%;
   background-color: black;
   color: white;
-  margin: 15px;
+  margin: 10px;
   text-align: center;
   border-radius: 20px;
   padding: 30px;
