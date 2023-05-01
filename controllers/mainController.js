@@ -18,8 +18,10 @@ async function tasks(req, res) {
 }
 //render task page based on id
 async function task(req, res) {
+  console.log(req.session);
+  console.log(req.session.userid);
   let task = await Task.findOne({ _id: req.query.id })
-  res.render('task', { task, session: req.session })
+  res.render('task', { task, session: req.session, success: req.query.success })
 }
 //render investments
 async function investments(req, res) {
@@ -76,6 +78,15 @@ function drop(req, res) {
   })
   res.redirect('/');
   mongoose.connection.db.dropCollection('userinvestments', function(err, res) {
+    if (err) {
+      console.log(err);
+    }
+    else {
+      console.log("userinvestments dropped");
+    }
+  })
+  res.redirect('/');
+  ongoose.connection.db.dropCollection('taskscompleted', function(err, res) {
     if (err) {
       console.log(err);
     }

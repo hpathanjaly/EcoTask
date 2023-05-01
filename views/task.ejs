@@ -14,13 +14,14 @@
               <form action='/setTime' method='post'>
                 <input type='number' name='length'>
                 <select name='time'>
+                  <option value='days'>Days</option>
                   <option value='hours'>Hours</option>
                   <option value='minutes'>Minutes</option>
                 </select>
-                <input type='submit' value='Set Time' class='loginbtn'>
                 <input type="hidden" value="<%= task.id %>" name='taskid'>
+                <input type='submit' value='Set Time' class='loginbtn'>
               </form>
-              <button><a href='/complete'>Complete</a></button>
+              <button><a href="/complete?id=<%= task.id %>">Complete</a></button>
               <form action = '/deleteTask' method = 'post'>
                 <input type="hidden" value="<%= task.id %>" name='taskid'>
                 <input type='submit' value='Delete Task' class='loginbtn'>

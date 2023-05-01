@@ -12,11 +12,15 @@ const taskSchema = new Schema({
   },
   carbon_reduce_possibility: {
     type: String,
-    required: true
+    required: true,
   },
   image: {
     type: String,
-    required: false
+    required: false,
+  },
+  notification: {
+    type: Number,
+    required: false,
   },
   users: [{type: Schema.Types.ObjectId, ref: "UserTasks"}]
 });
