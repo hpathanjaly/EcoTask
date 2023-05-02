@@ -14,6 +14,10 @@ const userInvestmentSchema = new Schema({
     type: Number,
     required: false
   },
+  notification: {
+    type: Number,
+    required: false,
+  },
   user: { type: Schema.Types.ObjectId, ref: "User" },
   investment: { type: Schema.Types.ObjectId, ref: "Investment" }
 });

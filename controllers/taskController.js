@@ -39,6 +39,7 @@ async function addTask(req, res) {
   await UserTasks.create({
     task_id: data.taskid,
     user_id: data.userid,
+    complete: false,
     task: data.taskid,
     user: data.userid
   });
@@ -49,17 +50,20 @@ async function myTasks(req, res) {
     res.redirect('/login?error=4');
   }
   else {
-    UserTasks.find({ user_id: req.session.userid }).populate('task').populate('user').exec((err, usersTasks) => {
+    await UserTasks.find({ user_id: req.session.userid }).populate('task').populate('user').exec((err, usersTasks) => {
       if (err) {
         console.log(err);
       }
       if (usersTasks) {
         let allTasks = [];
+        let allComplete = [];
+        let allNotifs = []
         usersTasks.forEach(userTask => {
           allTasks.push(userTask.task);
+          allComplete.push(userTask.complete);
+          allNotifs.push(userTask.notification);
         })
-        console.log(allTasks);
-        res.render('myTasks', { tasks: allTasks });
+        res.render('myTasks', { tasks: allTasks, completed: allComplete, notifications: allNotifs });
       }
     });
   }

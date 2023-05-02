@@ -3,7 +3,7 @@
     <%- include('./partials/head.ejs') %>
 <body>
   <%- include('./partials/checkNav.ejs') %>
-          <div class='task'>
+          <div id='task' class='task solo'>
             <% if(task.image){ %>
               <img src = "<%= task.image %>">
             <% } %>
@@ -11,20 +11,23 @@
               <h1><%= task.title %></h1>
               <h3>Carbon Saved: <%= task.carbon_reduce_possibility %></h3>
               <p><%= task.description %></p>
+              <% if (notification){ %>
+                <p class="notification">Current notification: <%= notification %></p>
+              <% } %>
               <form action='/setTime' method='post'>
-                <input type='number' name='length'>
+                <input class = "time" type='number' name='length' placeholder="Length">
                 <select name='time'>
                   <option value='days'>Days</option>
                   <option value='hours'>Hours</option>
                   <option value='minutes'>Minutes</option>
                 </select>
                 <input type="hidden" value="<%= task.id %>" name='taskid'>
-                <input type='submit' value='Set Time' class='loginbtn'>
+                <input type='submit' value='Set Time' class='taskbtn'>
               </form>
-              <button><a href="/complete?id=<%= task.id %>">Complete</a></button>
+              <a href="/complete?id=<%= task.id %>"><input type="submit" class="taskbtn" value="Complete"></a>
               <form action = '/deleteTask' method = 'post'>
                 <input type="hidden" value="<%= task.id %>" name='taskid'>
-                <input type='submit' value='Delete Task' class='loginbtn'>
+                <input type='submit' value='Delete Task' class='taskbtn'>
               </form>
             </div>
           </div>

@@ -2,6 +2,7 @@ const session = require("express-session");
 const mongoose = require("mongoose");
 const Task = require('../models/task');
 const Investment = require('../models/investment');
+const UserTasks = require('../models/userTasks');
 const taskController = require('../controllers/taskController');
 const investmentController = require('../controllers/investmentController');
 
@@ -18,10 +19,26 @@ async function tasks(req, res) {
 }
 //render task page based on id
 async function task(req, res) {
-  console.log(req.session);
-  console.log(req.session.userid);
-  let task = await Task.findOne({ _id: req.query.id })
-  res.render('task', { task, session: req.session, success: req.query.success })
+  await UserTasks.findOne({ task_id: req.query.id, user_id: req.session.userid }).populate('task').exec((err, usersTask)=>{
+    if(usersTask){
+      let task = usersTask.task;
+      let notification = (usersTask.notification)/1000/60;
+      if(!isNaN(notification)){ 
+        if( notification > 60){
+          notification /= 60;
+          if (notification > 24 && notification % 24 == 0) {
+            notification /= 24
+            notification += " days"
+          }
+          else notification += " hours";
+        }
+        else notification += " minutes";
+      }
+      else notification += "Not set"
+      console.log(notification)
+      res.render('task', { task, session: req.session, success: req.query.success, notification })
+    }
+  });
 }
 //render investments
 async function investments(req, res) {
@@ -76,7 +93,6 @@ function drop(req, res) {
       console.log("usertasks dropped");
     }
   })
-  res.redirect('/');
   mongoose.connection.db.dropCollection('userinvestments', function(err, res) {
     if (err) {
       console.log(err);
@@ -86,7 +102,7 @@ function drop(req, res) {
     }
   })
   res.redirect('/');
-  ongoose.connection.db.dropCollection('taskscompleted', function(err, res) {
+  mongoose.connection.db.dropCollection('taskscompleted', function(err, res) {
     if (err) {
       console.log(err);
     }

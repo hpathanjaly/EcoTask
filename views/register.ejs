@@ -4,7 +4,7 @@
 <body>
   <% if(success > 0){ %>
     <% if(success == 1) { %>
-      <div class="success"><p>You have successfully registered. You may proceed to <a href="/login">log in</a></p></div>
+      <div class="success"><p>You have successfully registered. You may proceed to <a href="/login" class="link">log in</a></p></div>
     <% } %>
   <% } %>
   <% if(error > 0){ %>
@@ -29,7 +29,7 @@
             <label for="confirm_password">Confirm Password</label>
             <input type="password" name="confirm_password" required><br>
             <button type="submit" class="registerbtn">Register</button><br>
-            <small>Already registered? <a href="/login">Log in here</a>
+            <small>Already registered? <a href="/login" class="link">Log in here</a>
           </div>
         </form>
     </div>

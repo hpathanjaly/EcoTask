@@ -3,6 +3,8 @@ html, body, *{
     margin: 0;
     padding: 0;
     font-family: 'Montserrat', sans-serif;
+    text-decoration: none;
+    color: white;
 }
 body{
     /* padding-top: 100px; */
@@ -53,6 +55,13 @@ nav a:hover {
     font-size: 30px;
     border-radius: 10px;
 }
+.form p, .form label, .form small, input{
+    color: black;
+}
+.link{
+    color: blue;
+    text-decoration: underline;
+}
 input{
     font-size: 30px;
     align-items: right;
@@ -73,6 +82,27 @@ input{
     font-size: 30px;
     border: none;
     border-radius: 5px;
+}
+select, option{
+    color: black;
+}
+.time{
+    width: 20%;
+    font-size: 15px;
+}
+.notification{
+    margin: 10px 0px;
+    font-size: 20px;
+}
+.taskbtn{
+    background-color: rgb(0, 0, 0);
+    margin: 5px auto;
+    text-align: center;
+    color: white;
+    padding: 5px;
+    font-size: 25px;
+    border: none;
+    border-radius: 3px;
 }
 .registerbtn{
     background-color: rgb(0, 0, 0);
@@ -134,4 +164,12 @@ small{
   background-color: rgba(255,255,255, 0.25);
   padding: 20px;
   margin: 10px auto;
+}
+
+/* misc */
+.solo{
+    margin: 20px auto;
+}
+.complete{
+    opacity: 0.25;
 }

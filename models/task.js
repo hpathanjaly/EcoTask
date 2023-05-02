@@ -18,10 +18,6 @@ const taskSchema = new Schema({
     type: String,
     required: false,
   },
-  notification: {
-    type: Number,
-    required: false,
-  },
   users: [{type: Schema.Types.ObjectId, ref: "UserTasks"}]
 });
 

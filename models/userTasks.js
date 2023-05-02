@@ -14,9 +14,16 @@ const userTaskSchema = new Schema({
     type: Number,
     required: false
   },
+  notification: {
+    type: Number,
+    required: false,
+  },
+  complete: {
+    type: Boolean,
+    required: true,
+  },
   user: {type: Schema.Types.ObjectId, ref: "User"},
-  task: {type: Schema.Types.ObjectId, ref: "Task"},
-  investment: {type: Schema.Types.ObjectId, ref: "Investment"}
+  task: {type: Schema.Types.ObjectId, ref: "Task"}
 });
 
 const UserTask = mongoose.model('UserTask', userTaskSchema);
