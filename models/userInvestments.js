@@ -10,11 +10,15 @@ const userInvestmentSchema = new Schema({
     type: String,
     required: false
   },
-  time: {
+  budget: {
     type: Number,
-    required: false
+    required: false,
   },
-  notification: {
+  complete: {
+    type: Boolean,
+    required: true,
+  },
+  budgetCompleted: {
     type: Number,
     required: false,
   },

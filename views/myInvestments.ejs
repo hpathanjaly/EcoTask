@@ -5,25 +5,27 @@
     <%- include('./partials/checkNav.ejs') %>
     <div class='allCards'>
     <% if(investments.length > 0){ %>
-        <% investments.forEach(investment => { %>
-          <div class='task'>
-            <% if(investment.image){ %>
-              <img src = "<%= investment.image %>">
+        <% for(let i = 0; i < investments.length; i++){ %>
+          <div id="investment<%=investments[i]._id%>"class='task'>
+            <a href="/investment?id=<%= investments[i]._id %>">
+            <% if(investments[i].image){ %>
+              <img src = "<%= investments[i].image %>">
             <% } %>
             <div class="taskInfo">
-              <h1><%= investment.title %></h1>
-              <h3>Carbon Saved: <%= investment.carbon_reduce_possibility %></h3>
-              <p><%= investment.description %></p>
-              <form action = "/addInvestment" method = "post"> 
-                <input type="hidden" name="investmentid" value="<%= investment._id %>">
-                <input type="hidden" name="userid" value="<%= session.userid %>">
-                <input type='submit' value='Add Task' class='loginbtn'>
-              </form>
+              <h1><%= investments[i].title %></h1>
+              <h3>Carbon Saved: <%= investments[i].carbon_reduce_possibility %></h3>
+              <p><%= investments[i].description %></p>
             </div>
+            </a>
           </div>
-        <% }) %>
+          <% if(completed[i]) { %> 
+            <script>
+              document.getElementById("investment<%=investments[i]._id%>").classList.add('complete')
+            </script>
+          <% } %>
+        <% } %>
       <% }  else{ %>
-        <h1>No Tasks</h1>
+        <h1 class='black'>No Investments</h1>
       <% } %>
     </div>
 </body>

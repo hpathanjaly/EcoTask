@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const Task = require('../models/task');
 const Investment = require('../models/investment');
 const UserTasks = require('../models/userTasks');
+const UserInvestments = require('../models/userInvestments');
 const taskController = require('../controllers/taskController');
 const investmentController = require('../controllers/investmentController');
 
@@ -14,35 +15,41 @@ async function index(req, res) {
 }
 //render tasks
 async function tasks(req, res) {
-  let tasks = await Task.find()
+  let allTasks = await Task.find();
+  let tasks = [];
+  if(req.session.userid){
+    let usersTasks = await UserTasks.find({ user_id: req.session.userid });
+    allTasks.forEach((task)=>{
+      let added = false
+      usersTasks.forEach((userTask) =>{
+        if(task._id == userTask.task_id){
+          added = true;
+        }
+      })
+      if(!added) tasks.push(task);
+    })
+  }
+  else allTasks.forEach((task)=>{ tasks.push(task) });
   res.render('tasks', { tasks, session: req.session })
 }
-//render task page based on id
-async function task(req, res) {
-  await UserTasks.findOne({ task_id: req.query.id, user_id: req.session.userid }).populate('task').exec((err, usersTask)=>{
-    if(usersTask){
-      let task = usersTask.task;
-      let notification = (usersTask.notification)/1000/60;
-      if(!isNaN(notification)){ 
-        if( notification > 60){
-          notification /= 60;
-          if (notification > 24 && notification % 24 == 0) {
-            notification /= 24
-            notification += " days"
-          }
-          else notification += " hours";
-        }
-        else notification += " minutes";
-      }
-      else notification += "Not set"
-      console.log(notification)
-      res.render('task', { task, session: req.session, success: req.query.success, notification })
-    }
-  });
-}
+
 //render investments
 async function investments(req, res) {
-  let investments = await Investment.find()
+  let allInvestments = await Investment.find();
+  let investments = [];
+  if(req.session.userid){
+    let usersInvestments = await UserInvestments.find({ user_id: req.session.userid });
+    allInvestments.forEach((investment)=>{
+      let added = false;
+      usersInvestments.forEach((userInvestment) =>{
+        if(investment._id == userInvestment.investment_id){
+          added = true;
+        }
+      })
+      if(!added) investments.push(investment);
+    })
+  }
+  else allInvestments.forEach((investment)=>{ investments.push(investment) });
   res.render('investments', { investments, session: req.session })
 }
 //render account
@@ -101,7 +108,6 @@ function drop(req, res) {
       console.log("userinvestments dropped");
     }
   })
-  res.redirect('/');
   mongoose.connection.db.dropCollection('taskscompleted', function(err, res) {
     if (err) {
       console.log(err);
@@ -127,6 +133,5 @@ module.exports = {
   drop,
   tasks,
   investments,
-  create,
-  task
+  create
 }

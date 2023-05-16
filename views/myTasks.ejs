@@ -7,7 +7,7 @@
     <% if(tasks.length > 0){ %>
         <% for(let i = 0; i < tasks.length; i++){ %>
           <div id="task<%= i %>" class='task'>
-            <a class='link' href="/task?id=<%= tasks[i]._id %>">
+            <a href="/task?id=<%= tasks[i]._id %>">
               <% if(tasks[i].image){ %>
                 <img src = "<%= tasks[i].image %>">
               <% } %>
@@ -15,28 +15,22 @@
                 <h1><%= tasks[i].title %></h1>
                 <h3>Carbon Saved: <%= tasks[i].carbon_reduce_possibility %></h3>
                 <p><%= tasks[i].description %></p>
-                <!-- <form action = "/addTask" method = "post"> 
-                <input type="hidden" name="taskid" value="<%= tasks[i]._id %>">
-                <input type="hidden" name="userid" value="<%= session.userid %>">
-                <input type='submit' value='Add Task' class='loginbtn'>
-                </form> -->
               </div>
-              <% if (completed[i]) { %>
-                <script>
-                  document.getElementById("task<%=i%>").classList.add("complete");
-                </script>
-              <% } %>
             </a>
-          </div>
+          </div> 
+          <% if (completed[i]) { %>
+            <script>
+              document.getElementById("task<%=i%>").classList.add("complete");
+              
+            </script>
+          <% } %>
         <% } %>
       <% }  else{ %>
-        <h1>No Tasks</h1>
+        <h1 class='black'>No Tasks</h1>
       <% } %>
     </div>
     <script>
-      if(document.getElementsByClassName('task').classList.contains('complete')){
-        document.getElementsByClassName('link').href = "/myTasks";
-      }
+      
     </script>
 </body>
 </html>

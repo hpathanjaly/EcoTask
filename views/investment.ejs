@@ -3,7 +3,16 @@
     <%- include('./partials/head.ejs') %>
 <body>
   <%- include('./partials/checkNav.ejs') %>
-          <div class='task'>
+    <% if(success == 1) { %>
+        <div class="success"><p>Budget Set!</p></div>
+    <% } %>
+    <% if(success == 2) { %>
+        <div class="success"><p>Budget Updated!</p></div>
+    <% } %>
+    <% if(warning == 1) { %>
+        <div class="warning"><p>This budget hasnt been filled. Are you sure you want to complete it? <a class='link' href="/completeInvestment?id=<%=investment._id%>&complete=true">Yes</a>/<a class='link' href="/investment?id=<%=investment._id%>">No</a></p></div>
+    <% } %>
+          <div id="investment" class='task solo'>
             <% if(investment.image){ %>
               <img src = "<%= investment.image %>">
             <% } %>
@@ -11,7 +20,51 @@
               <h1><%= investment.title %></h1>
               <h3>Carbon Saved: <%= investment.carbon_reduce_possibility %></h3>
               <p><%= investment.description %></p>
+              <% if(budget == "Not Set"){ %>
+                <p class="notification">Current Budget: <%=budget%></p>
+              <% } else { %>
+                <p class="notification">Current Budget: $<%=budget%></p>
+                <p class="notification">Budget Remaining: $<%= budget-budgetCompleted %></p>
+                <div class="col">
+                  <p class="progress">Progress:</p>
+                  <div id="budgetBar">
+                    <div id="remaining"></div>
+                  </div>
+                </div>
+                <script>
+                  let budget = Number("<%=budget%>");
+                  let budgetCompleted = Number("<%=budgetCompleted%>");
+                  let remaining = document.getElementById('remaining');
+                  let width = 100 * budgetCompleted/budget;
+                  remaining.style.width = width + "%";
+                </script>
+                <form action='/updateBudget' method='post'>
+                  <input class = "budget" type='number' name='moneyAdded' placeholder="$">
+                  <input type="hidden" value="<%= investment._id %>" name='investmentid'>
+                  <input type='submit' value='Update Budget' class='taskbtn'>
+                </form>
+              <% } %>
+              <form action='/setBudget' method='post'>
+                <input class = "budget" type='number' name='budget' placeholder="$">
+                <input type="hidden" value="<%= investment._id %>" name='investmentid'>
+                <input type='submit' value='Set Budget' class='taskbtn'>
+              </form>
+              <a href="/completeInvestment?id=<%= investment._id %>"><input type="submit" class="taskbtn" value="Complete"></a>
+              <form action = '/deleteInvestment' method = 'post'>
+                <input type="hidden" value="<%= investment._id %>" name='investmentid'>
+                <input id="delete" type='submit' value='Delete Investment' class='taskbtn'>
+              </form>
             </div>
           </div>
+  <% if(complete) { %>
+    <script>
+        document.getElementById("investment").classList.add('complete')
+        let submits = document.querySelectorAll("input[type='submit']");
+        submits.forEach((submit) => {
+          submit.setAttribute("disabled", true);
+        })
+        document.getElementById('delete').removeAttribute("disabled")
+    </script>
+    <% } %>
 </body>
 </html>

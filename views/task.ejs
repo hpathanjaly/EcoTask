@@ -11,7 +11,9 @@
               <h1><%= task.title %></h1>
               <h3>Carbon Saved: <%= task.carbon_reduce_possibility %></h3>
               <p><%= task.description %></p>
-              <% if (notification){ %>
+              <% if (notification == "Not set"){ %>
+                <p class="notification">Current notification: Not Set</p>
+              <% } else { %>
                 <p class="notification">Current notification: <%= notification %></p>
               <% } %>
               <form action='/setTime' method='post'>
@@ -24,12 +26,62 @@
                 <input type="hidden" value="<%= task.id %>" name='taskid'>
                 <input type='submit' value='Set Time' class='taskbtn'>
               </form>
-              <a href="/complete?id=<%= task.id %>"><input type="submit" class="taskbtn" value="Complete"></a>
+              <a href="/completeTask?id=<%= task.id %>"><input type="submit" class="taskbtn" value="Complete"></a>
               <form action = '/deleteTask' method = 'post'>
                 <input type="hidden" value="<%= task.id %>" name='taskid'>
-                <input type='submit' value='Delete Task' class='taskbtn'>
+                <input id="delete" type='submit' value='Delete Task' class='taskbtn'>
               </form>
             </div>
           </div>
+    <% if(complete){ %>
+      <script>
+        let task = document.getElementById("task")
+        task.classList.add('complete')
+        function interval(days, hours, minutes, seconds) {
+          let newH1 = document.createElement('h1');
+          let x = setInterval(() => {
+            if (seconds > 0) {
+              seconds--;
+            }
+            else {
+              if (minutes > 0) {
+                seconds = 59;
+                minutes--;
+              }
+              else {
+                if (hours > 0) {
+                  minutes = 59
+                  seconds = 59
+                  hours--;
+                }
+                else {
+                  if (days > 0) {
+                    hours = 23;
+                    minutes = 59;
+                    seconds = 59
+                    days--;
+                  }
+                  else {
+                    clearInterval(x);
+                  }
+                }
+              }
+            }
+            newH1.innerHTML = days + " days, " + hours + " hours, " + minutes + " minutes, " + seconds + " seconds";
+            task.append(newH1);
+          }, 1000)
+         }
+        let notification = Number("<%=timeRemaining%>")
+        const seconds = Math.floor((notification / 1000) % 60);
+        const minutes = Math.floor((notification / 1000 / 60) % 60);
+        const hours = Math.floor((notification / 1000 / 60 / 60) % 24);
+        const days = Math.floor((notification / 1000 / 60 / 60/ 24) % 365);
+        interval(days, hours, minutes, seconds)
+        let submits = document.querySelectorAll("input[type='submit']");
+        submits.forEach((submit) => {
+          submit.setAttribute("disabled", true);
+        })
+      </script>
+    <% } %>
 </body>
 </html>

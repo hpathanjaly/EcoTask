@@ -10,10 +10,6 @@ const userTaskSchema = new Schema({
     type: String,
     required: false
   },
-  time: {
-    type: Number,
-    required: false
-  },
   notification: {
     type: Number,
     required: false,
@@ -21,6 +17,10 @@ const userTaskSchema = new Schema({
   complete: {
     type: Boolean,
     required: true,
+  },
+  timeRemaining: {
+    type: Number,
+    required: false,
   },
   user: {type: Schema.Types.ObjectId, ref: "User"},
   task: {type: Schema.Types.ObjectId, ref: "Task"}

@@ -90,6 +90,10 @@ select, option{
     width: 20%;
     font-size: 15px;
 }
+.budget{
+    width: 30%;
+    font-size: 15px;
+}
 .notification{
     margin: 10px 0px;
     font-size: 20px;
@@ -119,20 +123,20 @@ small{
 }
 
 /* alerts */
-.error{
+.error, .success, .warning{
     text-align: center;
     width: 100%;
-    background-color: red;
     font-size: 15px;
     padding: 5px;
 }
-
+.error{
+    background-color: red;
+}
 .success{
-    padding: 5px;
-    text-align: center;
-    width: 100%;
     background-color: limegreen;
-    font-size: 15px;
+}
+.warning{
+  background-color: orange;
 }
 
 /* tasks styling */
@@ -172,4 +176,31 @@ small{
 }
 .complete{
     opacity: 0.25;
+}
+
+/* Budget Bar  */
+.col{
+  width: 100%;
+  margin: 20px auto;
+}
+.progress{
+  width: 35%;
+  font-size: 20px;
+  display:inline-block;
+  vertical-align:top;
+}
+#budgetBar{
+  border: black solid 2px;
+  border-radius:5px;
+  background-color:#dedede;
+  width: 63%;
+  height:15px;
+  display:inline-block;
+}
+#remaining{
+  height: 15px;
+  background-color: green;
+}
+.black{
+  color:black;
 }

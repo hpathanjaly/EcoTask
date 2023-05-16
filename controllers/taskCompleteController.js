@@ -23,21 +23,24 @@ async function setTime(req, res) {
 }
 async function complete(req, res) {
   task_id = req.query.id;
-  await UserTasks.updateOne({ user_id: req.session.userid, task_id }, { $set: { complete: true } });
-  makeFalse(req.session.userid, task_id);
-  res.redirect('myTasks');
+  let currentTask = await UserTasks.findOne({ task_id, user_id: req.session.userid })
+  if (currentTask.notification > 0){
+    await UserTasks.updateOne({ user_id: req.session.userid, task_id }, { $set: { complete: true } });
+    makeFalse(req.session.userid, task_id);
+    res.redirect('myTasks');
+  } 
+  else res.redirect('myTasks?error=1');
 }
 
 async function makeFalse(user_id, task_id){
   await UserTasks.findOne({ user_id, task_id }, async (err, userTask) => {
-    let time = 0;
+    let notification = userTask.notification;
     let x = setInterval( async () => {
-      let notification = userTask.notification;
-      time += 1000;
-      //console.log(time);
-      if(time == notification){
+      notification -= 1000;
+      await UserTasks.updateOne({ user_id, task_id }, { $set: { timeRemaining: notification }})
+      if(notification == 0){
         clearInterval(x);
-        await UserTasks.updateOne({ user_id, task_id }, { $set: { complete: false } })
+        await UserTasks.updateOne({ user_id, task_id }, { $set: { complete: false, timeRemaining: null } })
       }
     }, 1000);
   }).clone().catch((err)=>{console.log(err)});
