@@ -16,6 +16,12 @@ function createAll(req, res) {
       description: "Ride your bike instead of taking your car for short trips. Riding your bike can save you money and can help save the environment. Nearly 40% of trips taken in the US are 2 miles or less so taking your bike can be safer, cleaner, and maybe faster.",
       carbon_reduce_possibility: "370 g/mi",
       image: "https://momentummag.com/wp-content/uploads/2015/08/Advocacy_First_Time_Bike_Commuters.jpg",
+    },
+    {
+      title: "Reduce Meat Consumption",
+      carbon_reduce_possibility: "Up to 1.5 ton/year",
+      description: "Reducing meat consumption, especially consumption of red meats such as beef and lamb, can have a large impact on GHG. Livestock makes up about 40% of methane emissions. Set a reminder for every time you go grocery shooping to keep this in mind",
+      image: "https://images.theconversation.com/files/352720/original/file-20200813-22-u6p0qo.jpg?ixlib=rb-1.1.0&rect=0%2C0%2C6576%2C4288&q=45&auto=format&w=926&fit=clip"
     }
   ]).then(res => {
     console.log('tasks added');
@@ -64,10 +70,9 @@ async function task(req, res) {
     if(usersTask){
       let task = usersTask.task;
       let notifNum = usersTask.notification;
-      let timeRemaining = usersTask.timeRemaining
       let notification; 
       if(!isNaN(notifNum) && notifNum  > 0){ 
-        notfication = notifNum/1000/60;
+        notification = notifNum/1000/60;
         if( notification > 60){
           notification /= 60;
           if (notification > 24 && notification % 24 == 0) {
@@ -79,8 +84,12 @@ async function task(req, res) {
         else notification += " minutes";
       }
       else notification = "Not set"
+      let notifTime;
+      if(usersTask.complete){
+        notifTime = usersTask.complete_time
+      }
       console.log(notification)
-      res.render('task', { task, session: req.session, success: req.query.success, notification, complete: usersTask.complete, timeRemaining })
+      res.render('task', { task, session: req.session, success: req.query.success, notification, complete: usersTask.complete, notifTime })
     }
   });
 }

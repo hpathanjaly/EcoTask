@@ -37,46 +37,28 @@
       <script>
         let task = document.getElementById("task")
         task.classList.add('complete')
-        function interval(days, hours, minutes, seconds) {
+        function interval(current, final) {
           let newH1 = document.createElement('h1');
           let x = setInterval(() => {
-            if (seconds > 0) {
-              seconds--;
-            }
-            else {
-              if (minutes > 0) {
-                seconds = 59;
-                minutes--;
-              }
-              else {
-                if (hours > 0) {
-                  minutes = 59
-                  seconds = 59
-                  hours--;
-                }
-                else {
-                  if (days > 0) {
-                    hours = 23;
-                    minutes = 59;
-                    seconds = 59
-                    days--;
-                  }
-                  else {
-                    clearInterval(x);
-                  }
-                }
-              }
-            }
+            console.log(final-current)
+            if (Math.round(current) >= Math.round(final)){
+              location.reload()
+              clearInterval(x);
+            };
+            const seconds = Math.floor(((final-current)) % 60);
+            const minutes = Math.floor(((final-current) / 60) % 60);
+            const hours = Math.floor(((final-current) / 60 / 60) % 24);
+            const days = Math.floor(((final-current) / 60 / 60/ 24) % 365);
             newH1.innerHTML = days + " days, " + hours + " hours, " + minutes + " minutes, " + seconds + " seconds";
             task.append(newH1);
+            current += 1;
           }, 1000)
          }
-        let notification = Number("<%=timeRemaining%>")
-        const seconds = Math.floor((notification / 1000) % 60);
-        const minutes = Math.floor((notification / 1000 / 60) % 60);
-        const hours = Math.floor((notification / 1000 / 60 / 60) % 24);
-        const days = Math.floor((notification / 1000 / 60 / 60/ 24) % 365);
-        interval(days, hours, minutes, seconds)
+        let currentTime = Math.round(new Date().getTime() / 1000)
+        let notificationTime = Math.round(Number("<%=notifTime%>") / 1000)
+        console.log(currentTime)
+        console.log(notificationTime)
+        interval(currentTime, notificationTime)
         let submits = document.querySelectorAll("input[type='submit']");
         submits.forEach((submit) => {
           submit.setAttribute("disabled", true);

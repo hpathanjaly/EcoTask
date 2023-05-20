@@ -18,6 +18,7 @@ async function setTime(req, res) {
   if (selectedTime == 'minutes') {
     time = data.length * mSecInMin
   }
+  console.log(time)
   await UserTasks.updateOne({user_id: req.session.userid, task_id: data.taskid }, { $set: {notification: time} });
   res.redirect('/task?id=' + data.taskid + '&success=1')
 }
@@ -25,7 +26,8 @@ async function complete(req, res) {
   task_id = req.query.id;
   let currentTask = await UserTasks.findOne({ task_id, user_id: req.session.userid })
   if (currentTask.notification > 0){
-    await UserTasks.updateOne({ user_id: req.session.userid, task_id }, { $set: { complete: true } });
+    let notifTime = new Date().getTime() + currentTask.notification
+    await UserTasks.updateOne({ user_id: req.session.userid, task_id }, { $set: { complete: true, complete_time: notifTime } });
     makeFalse(req.session.userid, task_id);
     res.redirect('myTasks');
   } 
@@ -36,13 +38,12 @@ async function makeFalse(user_id, task_id){
   await UserTasks.findOne({ user_id, task_id }, async (err, userTask) => {
     let notification = userTask.notification;
     let x = setInterval( async () => {
-      notification -= 1000;
-      await UserTasks.updateOne({ user_id, task_id }, { $set: { timeRemaining: notification }})
+      notification -= 20000;
       if(notification == 0){
         clearInterval(x);
         await UserTasks.updateOne({ user_id, task_id }, { $set: { complete: false, timeRemaining: null } })
       }
-    }, 1000);
+    }, 20000);
   }).clone().catch((err)=>{console.log(err)});
 }
 

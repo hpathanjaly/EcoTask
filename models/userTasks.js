@@ -18,7 +18,7 @@ const userTaskSchema = new Schema({
     type: Boolean,
     required: true,
   },
-  timeRemaining: {
+  complete_time: {
     type: Number,
     required: false,
   },

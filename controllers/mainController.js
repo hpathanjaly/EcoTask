@@ -1,5 +1,6 @@
 const session = require("express-session");
 const mongoose = require("mongoose");
+const User = require("../models/user");
 const Task = require('../models/task');
 const Investment = require('../models/investment');
 const UserTasks = require('../models/userTasks');
@@ -9,9 +10,12 @@ const investmentController = require('../controllers/investmentController');
 
 //render index
 async function index(req, res) {
-  let topThree = await Task.find().limit(3)
-  //console.log(topThree)
-  res.render('index', { topThree, session: req.session });
+  if(req.session.userid){
+    res.redirect('/account');
+  }
+  else{
+    res.redirect('/login')
+  }
 }
 //render tasks
 async function tasks(req, res) {
@@ -53,8 +57,14 @@ async function investments(req, res) {
   res.render('investments', { investments, session: req.session })
 }
 //render account
-const account = (req, res) => {
-  res.render('account', { session });
+const account = async (req, res) => {
+  if(req.session.userid){
+    let user = await User.findOne({ _id: req.session.userid });
+    res.render('account', { user });
+  }
+  else{
+    res.redirect('/login?error=4')
+  }
 }
 //render login
 const login = (req, res) => {
